@@ -32,37 +32,40 @@ const instructions = Platform.select({
 type Props = {};
 export default class App extends Component<Props> {
   render() {
-    return (
-        <View style={styles.container}>
-            <Text style={styles.welcome}>[MTA]Android React Native示例</Text>
-            <Text style={styles.instructions}>step1.对应原生MTAStatConfig类相关的调用</Text>
-            <Button
-                onPress={() => {
+      if (Platform.OS === "android") {
+          return (
+              <View style={styles.container}>
+                  <Text style={styles.welcome}>[MTA]Android React Native示例</Text>
+                  <Text style={styles.instructions}>step1.对应原生MTAStatConfig类相关的调用</Text>
+                  <Button
+                      onPress={() => {
 
-                    //开启调试日志
-                    RN_MTAStatConfig_Module.setDebugEnable(true);
+                          //开启调试日志
+                          RN_MTAStatConfig_Module.setDebugEnable(true);
 
-                    Alert.alert('初始化配置完毕');
-
-
-                }}
-                title="初始化配置"
-            />
-            <Text style={styles.instructions}>step2.对应原生MTAStatService类相关的调用</Text>
-            <Button
-                onPress={() => {
-
-                    //启动MTA
-                    RN_MTAStatService_Module.registerActivityLifecycleCallbacks();
+                          Alert.alert('初始化配置完毕');
 
 
-                    Alert.alert('启动MTA完毕，请通过Logcat查看相关日志');
-                }}
-                title="启动MTA"
-            />
-            {/*<Text style={styles.instructions}>{instructions}</Text>*/}
-        </View>
-    );
+                      }}
+                      title="初始化配置"
+                  />
+                  <Text style={styles.instructions}>step2.对应原生MTAStatService类相关的调用</Text>
+                  <Button
+                      onPress={() => {
+
+                          //启动MTA
+                          RN_MTAStatService_Module.registerActivityLifecycleCallbacks();
+
+
+                          Alert.alert('启动MTA完毕，请通过Logcat查看相关日志');
+                      }}
+                      title="启动MTA"
+                  />
+                  {/*<Text style={styles.instructions}>{instructions}</Text>*/}
+              </View>
+          );
+      }
+
   }
 }
 
