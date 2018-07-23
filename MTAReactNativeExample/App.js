@@ -7,9 +7,12 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Alert} from 'react-native';
+import {Platform, StyleSheet, Text, View, Alert,Button} from 'react-native';
 
 import {NativeModules} from 'react-native';
+
+import RN_MTAStatConfig_Module from './RN_MTAStatConfig_Module'
+import RN_MTAStatService_Module from './RN_MTAStatService_Module'
 
 if (Platform.OS === "ios") {
   var mtaModule = NativeModules.MTAModule;
@@ -30,11 +33,35 @@ type Props = {};
 export default class App extends Component<Props> {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
+        <View style={styles.container}>
+            <Text style={styles.welcome}>[MTA]Android React Native示例</Text>
+            <Text style={styles.instructions}>step1.对应原生MTAStatConfig类相关的调用</Text>
+            <Button
+                onPress={() => {
+
+                    //开启调试日志
+                    RN_MTAStatConfig_Module.setDebugEnable(true);
+
+                    Alert.alert('初始化配置完毕');
+
+
+                }}
+                title="初始化配置"
+            />
+            <Text style={styles.instructions}>step2.对应原生MTAStatService类相关的调用</Text>
+            <Button
+                onPress={() => {
+
+                    //启动MTA
+                    RN_MTAStatService_Module.registerActivityLifecycleCallbacks();
+
+
+                    Alert.alert('启动MTA完毕，请通过Logcat查看相关日志');
+                }}
+                title="启动MTA"
+            />
+            {/*<Text style={styles.instructions}>{instructions}</Text>*/}
+        </View>
     );
   }
 }
